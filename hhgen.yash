@@ -1,0 +1,35 @@
+#!/usr/local/bin/yash
+#
+# 业余无线电台呼号批量生成shell(yash)脚本
+#   使用了/dev/urandom来生成物理随机数
+#   生成尽量接近真实的业余台呼号
+#   用法：
+#       yash hhgen.yash
+
+LANG=C
+ECHO_STYLE=GNU
+
+h1=B # B分配给中国
+i=0
+n=5
+echo -e -n "6位呼号\t7位呼号\n"
+while [ $i -lt $n ]
+do
+h2=$(head /dev/urandom | tr -dc A-KR-TY-Z | head -c1)
+h3=$(head /dev/urandom | tr -dc 0-9 | head -c1) # 分区号
+h4=$(head /dev/urandom | tr -dc A-Z | head -c1) # 以下为呼号后缀
+h5=$(head /dev/urandom | tr -dc A-Z | head -c1)
+h6=$(head /dev/urandom | tr -dc A-Z | head -c1)
+echo -e -n "$h1$h2$h3$h4$h5$h6\t"
+
+h2=$(head /dev/urandom | tr -dc A-KR-TY-Z | head -c1)
+h3=$(head /dev/urandom | tr -dc 0-9 | head -c1) # 分区号
+h4=$(head /dev/urandom | tr -dc A-Z | head -c1) # 以下为呼号后缀
+h5=$(head /dev/urandom | tr -dc A-Z | head -c1)
+h6=$(head /dev/urandom | tr -dc A-Z | head -c1)
+h7=$(head /dev/urandom | tr -dc A-Z | head -c1)
+echo -e -n "$h1$h2$h3$h4$h5$h6$h7\n"
+j=$((i++)) # ???
+done
+
+echo
