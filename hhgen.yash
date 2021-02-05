@@ -1,17 +1,17 @@
 #
 # 业余无线电台呼号批量生成shell(yash)脚本
-#   使用了/dev/urandom来生成物理随机数
 #   生成尽量接近真实的业余台呼号
+#   使用/dev/urandom来生成物理随机数
 #   用法：
 #       yash hhgen.yash
 
 LANG=C
 ECHO_STYLE=GNU
 
-h1=B
+echo -e -n "6位呼号\t7位呼号\n"
 i=0
 n=1000
-echo -e -n "6位呼号\t7位呼号\n"
+h1=B
 while [ $i -lt $n ]
 do
     h2=$(head /dev/urandom | tr -dc A-KR-TY-Z | head -c1)
@@ -48,18 +48,21 @@ do
     h6=$(head /dev/urandom | tr -dc A-Z | head -c1)
     if [ $h4 = S -a $h5 = O -a $h6 = S ] #SOS
     then
+        echo -e -n "生成SOS\n"
         return
     fi
     if [ $h4 = X -a $h5 = X -a $h6 = X ] #XXX
     then
+        echo -e -n "生成XXX\n"
         return
     fi
     if [ $h4 = T -a $h5 = T -a $h6 = T ] #TTT
     then
+        echo -e -n "生成TTT\n"
         return
     fi
     echo -e -n "$h1$h2$h3$h4$h5$h6\n"
-    j=$((i++)) # ???
+    j=$((i++)) #不知道如何增1
 done
 echo -e -n "\n"
 return
