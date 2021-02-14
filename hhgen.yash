@@ -1,3 +1,4 @@
+#!/usr/local/bin/yash
 #
 # 业余无线电台呼号批量生成shell(yash)脚本
 #   生成尽量接近真实的业余台呼号
@@ -14,7 +15,7 @@ n=1000
 h1=B
 while [ $i -lt $n ]
 do
-    h2=$(head /dev/urandom | tr -dc A-KR-TY-Z | head -c1)
+    h2=$(head /dev/urandom | tr -dc G-IDA | head -c1)
     h3=$(head /dev/urandom | tr -dc 0-9 | head -c1)
     if [ $h3 = 7 ] # 湖南..海南
         then
@@ -27,7 +28,7 @@ do
     fi
     h5=$(head /dev/urandom | tr -dc A-Z | head -c1)
     echo -e -n "$h1$h2$h3$h4$h5\t"
-    h2=$(head /dev/urandom | tr -dc A-KR-TY-Z | head -c1)
+    h2=$(head /dev/urandom | tr -dc G-IDA | head -c1)
     h3=$(head /dev/urandom | tr -dc 0-9 | head -c1)
     if [ $h3 = 7 ]
         then
