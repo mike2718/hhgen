@@ -1,6 +1,6 @@
 #!/usr/local/bin/yash
 #
-# 业余无线电台呼号批量生成shell(yash)脚本
+# 业余无线电台呼号批量生成yash脚本
 #   生成尽量接近真实的业余台呼号
 #   使用/dev/urandom来生成物理随机数
 #   用法：
@@ -9,9 +9,10 @@
 LANG=C
 ECHO_STYLE=GNU
 
-echo -e -n "6位呼号\t7位呼号\n"
+echo -e -n "\n6位呼号\t7位呼号\n"
+echo -e -n "-------\t-------\n"
 i=0
-n=1000
+n=15
 h1=B
 while [ $i -lt $n ]
 do
@@ -63,7 +64,7 @@ do
         return
     fi
     echo -e -n "$h1$h2$h3$h4$h5$h6\n"
-    j=$((i++)) #不知道如何增1
+    i=$((i+1))
 done
 echo -e -n "\n"
 return
