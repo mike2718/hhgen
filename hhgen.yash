@@ -9,7 +9,7 @@ LANG=C
 ECHO_STYLE=GNU
 
 echo -e -n "\n6位呼号\t7位呼号\n"
-echo -e -n "-------\t-------\n"
+echo -e -n "_____\t______\n"
 i=0
 n=15
 h1=B
