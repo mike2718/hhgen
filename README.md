@@ -14,5 +14,5 @@
 ## 依赖
 
 * [yash](https://yash.osdn.jp/)
-* 有`/dev/urandom`的GNU Linux
+* 有`/dev/urandom`的[GNU/Linux](https://en.wikipedia.org/wiki/Linux)
 
