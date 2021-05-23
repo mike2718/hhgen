@@ -8,60 +8,63 @@
 LANG=C
 ECHO_STYLE=GNU
 
-echo -e -n "\n6位呼号\t7位呼号\n"
+echo -e -n "\n5位呼号\t6位呼号\n"
 echo -e -n "_____\t______\n"
 i=0
-n=15
+n=10
 h1=B
 while [ $i -lt $n ]
 do
-    h2=$(head /dev/urandom | tr -dc G-IDA | head -c1)
+    # 《业余无线电台管理办法（修订）》（公开征求意见稿）
+    h2=$(head /dev/urandom | tr -dc A-CEFG-IKLR | head -c1)
     h3=$(head /dev/urandom | tr -dc 0-9 | head -c1)
-    if [ $h3 = 7 ] # 湖南..海南
-        then
-        h4=$(head /dev/urandom | tr -dc A-Z | head -c1)
-    elif [ $h3 = 0 ] # 新疆西藏
-        then
-        h4=$(head /dev/urandom | tr -dc A-L | head -c1)
+    if [ $h3 = 7 ]; # 湖南、广东、广西、海南
+        then h4=$(head /dev/urandom | tr -dc A-Z | head -c1);
+    elif [ $h3 = 0 ]; # 新疆、西藏
+        then h4=$(head /dev/urandom | tr -dc A-L | head -c1);
     else
-        h4=$(head /dev/urandom | tr -dc A-X | head -c1)
+        h4=$(head /dev/urandom | tr -dc A-X | head -c1);
     fi
     h5=$(head /dev/urandom | tr -dc A-Z | head -c1)
     echo -e -n "$h1$h2$h3$h4$h5\t"
-    h2=$(head /dev/urandom | tr -dc G-IDA | head -c1)
+    # 生成6位呼号
+    h2=$(head /dev/urandom | tr -dc A-CEFG-IKLR | head -c1)
     h3=$(head /dev/urandom | tr -dc 0-9 | head -c1)
-    if [ $h3 = 7 ]
-        then
-        h4=$(head /dev/urandom | tr -dc A-Z | head -c1)
-    elif [ $h3 = 0 ]
-        then
-        h4=$(head /dev/urandom | tr -dc A-L | head -c1)
+    if [ $h3 = 7 ];
+        then h4=$(head /dev/urandom | tr -dc A-Z | head -c1);
+    elif [ $h3 = 0 ];
+        then h4=$(head /dev/urandom | tr -dc A-L | head -c1);
     else
-        h4=$(head /dev/urandom | tr -dc A-X | head -c1)
+        h4=$(head /dev/urandom | tr -dc A-X | head -c1);
     fi
     # 排除3字母遇险混淆缩略语
-    if [ $h4 = Q ]
-        then
-        h5=$(head /dev/urandom | tr -dc A-NV-Z | head -c1) #QAA~QNZ/QVA~QZZ
+    if [ $h4 = Q ];
+        then h5=$(head /dev/urandom | tr -dc A-NV-Z | head -c1); # 不生成QOA～QUZ
     else
-        h5=$(head /dev/urandom | tr -dc A-Z | head -c1)
+        h5=$(head /dev/urandom | tr -dc A-Z | head -c1);
     fi
     h6=$(head /dev/urandom | tr -dc A-Z | head -c1)
-    if [ $h4 = S -a $h5 = O -a $h6 = S ] #SOS
-    then
-        echo -e -n "生成SOS\n"
-        return
-    fi
-    if [ $h4 = X -a $h5 = X -a $h6 = X ] #XXX
-    then
-        echo -e -n "生成XXX\n"
-        return
-    fi
-    if [ $h4 = T -a $h5 = T -a $h6 = T ] #TTT
-    then
-        echo -e -n "生成TTT\n"
-        return
-    fi
+    until !( ([ $h4 = S ] && [ $h5 = O ] && [ $h6 = S ]) || \
+             ([ $h4 = X ] && [ $h5 = X ] && [ $h6 = X ]) || \
+             ([ $h4 = T ] && [ $h5 = T ] && [ $h6 = T ])    \
+    );
+    do
+        h3=$(head /dev/urandom | tr -dc 0-9 | head -c1)
+        if [ $h3 = 7 ];
+            then h4=$(head /dev/urandom | tr -dc A-Z | head -c1);
+        elif [ $h3 = 0 ];
+            then h4=$(head /dev/urandom | tr -dc A-L | head -c1);
+        else
+            h4=$(head /dev/urandom | tr -dc A-X | head -c1);
+        fi
+        # 排除3字母遇险混淆缩略语
+        if [ $h4 = Q ];
+            then h5=$(head /dev/urandom | tr -dc A-NV-Z | head -c1); # 不生成QOA～QUZ
+        else
+            h5=$(head /dev/urandom | tr -dc A-Z | head -c1);
+        fi
+        h6=$(head /dev/urandom | tr -dc A-Z | head -c1);
+    done
     echo -e -n "$h1$h2$h3$h4$h5$h6\n"
     i=$((i+1))
 done
