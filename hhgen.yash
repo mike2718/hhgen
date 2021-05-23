@@ -45,9 +45,9 @@ do
         h5=$(head /dev/urandom | tr -dc A-Z | head -c1);
     fi
     h6=$(head /dev/urandom | tr -dc A-Z | head -c1)
-    until !( ([ $h4 = S ] && [ $h5 = O ] && [ $h6 = S ]) || \
-             ([ $h4 = X ] && [ $h5 = X ] && [ $h6 = X ]) || \
-             ([ $h4 = T ] && [ $h5 = T ] && [ $h6 = T ])    \
+    until !( ([ $h4 = S ] && [ $h5 = O ] && [ $h6 = S ]) ||
+             ([ $h4 = X ] && [ $h5 = X ] && [ $h6 = X ]) ||
+             ([ $h4 = T ] && [ $h5 = T ] && [ $h6 = T ])
     );
     do
         h3=$(head /dev/urandom | tr -dc 0-9 | head -c1)
